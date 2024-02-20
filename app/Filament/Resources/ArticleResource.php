@@ -5,11 +5,11 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\ArticleResource\Pages;
 use App\Filament\Resources\ArticleResource\Widgets\ArticleOverview;
 use App\Models\Article;
-use Filament\Actions\Action;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Actions\Action;
 use Filament\Tables\Actions\BulkAction;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
@@ -76,7 +76,14 @@ class ArticleResource extends Resource
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make()->before(function (Tables\Actions\DeleteAction $action, Article $record) {
                     $record->categories()->detach();
-                })
+                }),
+                Action::make('public')
+                    ->name('Public')
+                    ->icon('heroicon-s-eye')
+                    ->color('success')
+                    ->hidden(fn (Article $record) => $record->is_public)
+                    ->requiresConfirmation()
+                    ->action(fn (Article $record) => $record->update(['is_public' => true])),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -88,7 +95,7 @@ class ArticleResource extends Resource
                     BulkAction::make('bulk-public')
                         ->name('Make Public')
                         ->icon('heroicon-s-eye')
-                        ->color('primary')
+                        ->color('success')
                         ->requiresConfirmation()
                         ->action(function (EloquentCollection $records) {
                             // get array ids 
