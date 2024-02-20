@@ -3,6 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\ArticleResource\Pages;
+use App\Filament\Resources\ArticleResource\Widgets\ArticleOverview;
 use App\Models\Article;
 use Filament\Actions\Action;
 use Filament\Forms;
