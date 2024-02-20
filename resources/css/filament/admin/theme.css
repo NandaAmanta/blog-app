@@ -1,0 +1,9 @@
+@import '/vendor/filament/filament/resources/css/theme.css';
+
+@config 'tailwind.config.js';
+
+@layer components {
+    .fi-sidebar-nav {
+        border-bottom: 1px solid yellow;
+    }
+}
