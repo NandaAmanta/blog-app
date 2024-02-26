@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\ArticleResource\Pages;
 use App\Filament\Resources\ArticleResource\Widgets\ArticleOverview;
 use App\Models\Article;
+use Filament\Actions\ViewAction;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -73,6 +74,7 @@ class ArticleResource extends Resource
                     ->label('Visibility')
             ])
             ->actions([
+                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make()->before(function (Tables\Actions\DeleteAction $action, Article $record) {
                     $record->categories()->detach();
@@ -119,6 +121,7 @@ class ArticleResource extends Resource
             'index' => Pages\ListArticles::route('/'),
             'create' => Pages\CreateArticle::route('/create'),
             'edit' => Pages\EditArticle::route('/{record}/edit'),
+            'view' => Pages\ViewArticle::route('/{record}'),
         ];
     }
 }
