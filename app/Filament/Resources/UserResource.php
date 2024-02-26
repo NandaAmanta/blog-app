@@ -10,6 +10,7 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Table;
+use HasUploadArticlePerMonthFilter;
 use Illuminate\Database\Eloquent\Builder;
 
 class UserResource extends Resource
@@ -76,7 +77,8 @@ class UserResource extends Resource
                             $query->whereNull('email_verified_at');
                         }
                         return $query;
-                    })
+                    }),
+                HasUploadArticlePerMonthFilter::make()
             ])
             ->actions([]);
     }
