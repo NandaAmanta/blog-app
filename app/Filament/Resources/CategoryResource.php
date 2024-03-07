@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\CategoryResource\Pages;
 use App\Filament\Resources\CategoryResource\RelationManagers;
 use App\Models\Category;
+use CreatedByMeTableFilter;
 use Faker\Provider\ar_EG\Text;
 use Filament\Forms;
 use Filament\Forms\Components\Checkbox;
@@ -54,7 +55,8 @@ class CategoryResource extends Resource
                         '1' => 'Active',
                         '0' => 'Inactive',
                     ])
-                    ->label('Status')
+                    ->label('Status'),
+                CreatedByMeTableFilter::make('created_by_me')
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
