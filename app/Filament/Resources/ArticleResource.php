@@ -73,6 +73,10 @@ class ArticleResource extends Resource
                     ])
                     ->label('Visibility')
             ])
+            ->query(function (): Builder {
+                $userId = auth()->user()->id;
+                return Article::where('creator_id', $userId);
+            })
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
