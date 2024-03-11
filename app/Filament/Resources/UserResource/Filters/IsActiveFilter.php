@@ -6,6 +6,11 @@ use Illuminate\Database\Eloquent\Builder;
 
 class IsActiveFilter extends Filter
 {
+    
+    public static function getDefaultName(): ?string
+    {
+        return 'is_active';
+    }
 
     protected function setup(): void
     {
