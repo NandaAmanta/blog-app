@@ -29,6 +29,10 @@ class AdminPanelProvider extends PanelProvider
             ->path('admin')
             ->login()
             ->registration(Register::class)
+            ->renderHook( 
+                'panels::auth.login.form.after',
+                fn () => view('auth.socialite.google')
+            )
             ->profile()
             ->colors([
                 'primary' => Color::Amber,
