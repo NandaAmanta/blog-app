@@ -2,8 +2,11 @@
 
 namespace App\Filament\Pages;
 
+use App\Const\Action;
+use App\Const\Module;
 use App\Filament\Resources\ArticleResource\Widgets\ArticleOverview;
 use App\Filament\Resources\UserResource\Widgets\UserOverview;
+use App\Models\User;
 use Filament\Pages\Page;
 
 class Dashboard extends Page
@@ -14,17 +17,21 @@ class Dashboard extends Page
 
     public static function getWidgets(): array
     {
-        return [
-            ArticleOverview::class,
-            UserOverview::class,
-        ];
+        $widgets = [];
+        $user = auth()->user();
+        if ($user->hasPermissionTo(Action::READ . '.' . Module::USER)) {
+            $widgets[] = UserOverview::class;
+        }
+
+        if ($user->hasPermissionTo(Action::READ . '.' . Module::ARTICLE)) {
+            $widgets[] = ArticleOverview::class;
+        }
+
+        return $widgets;
     }
 
     protected function getHeaderWidgets(): array
     {
-        return [
-            ArticleOverview::class,
-            UserOverview::class,
-        ];
+        return $this::getWidgets();
     }
 }

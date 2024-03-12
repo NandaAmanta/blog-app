@@ -11,6 +11,7 @@ class MakePublicTableBulkAction extends BulkAction
     {
         return 'Make Public';
     }
+
     protected function setUp(): void
     {
         $this->icon('heroicon-s-eye')
