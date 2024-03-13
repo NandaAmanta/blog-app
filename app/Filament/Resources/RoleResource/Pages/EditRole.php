@@ -21,6 +21,8 @@ class EditRole extends EditRecord
     protected function handleRecordUpdate(Model $record, array $data): Model
     {
         $record->update($data);
+
+        // Sync Relation Permissions
         $keys = array_keys($data);
         $permissionIds = [];
         foreach ($keys as $key) {
@@ -37,7 +39,6 @@ class EditRole extends EditRecord
                 ->map(fn ($permission) => $permission->id)
                 ->toArray();
             $permissionIds = array_merge($permissionIds, $permissions);
-            // Sync Relation Permissions
         }
         $record->permissions()->sync($permissionIds);
         return $record;
