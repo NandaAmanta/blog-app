@@ -22,6 +22,11 @@ return [
             Action::DELETE . '.' . Module::USER,
             Action::UPDATE . '.' . Module::USER,
             Action::READ . '.' . Module::USER,
+
+            Action::CREATE . '.' . Module::ROLE,
+            Action::DELETE . '.' . Module::ROLE,
+            Action::UPDATE . '.' . Module::ROLE,
+            Action::READ . '.' . Module::ROLE,
         ]
     ],
     [
