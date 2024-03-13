@@ -66,12 +66,12 @@ class EditRole extends EditRecord
                 }
                 return CheckboxList::make($module)
                     ->options($options)
-                    ->disabled($data['name'] == RoleConst::ADMIN);
+                    ->disabled(in_array($data['name'], [RoleConst::ADMIN, RoleConst::WRITER]));
             });
 
         return $form
             ->schema([
-                TextInput::make('name')->label('Role')->columnSpanFull()->disabled($data['name'] == RoleConst::ADMIN),
+                TextInput::make('name')->label('Role')->columnSpanFull()->disabled(in_array($data['name'], [RoleConst::ADMIN, RoleConst::WRITER])),
                 ...$permissionCheckBox
             ]);
     }
