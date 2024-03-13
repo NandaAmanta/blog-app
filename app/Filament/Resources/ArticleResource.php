@@ -4,10 +4,15 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\ArticleResource\Actions\MakePublicTableAction;
 use App\Filament\Resources\ArticleResource\Pages;
+use App\Infolists\Components\ListCategories;
 use App\Models\Article;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Infolists\Components\TextEntry;
+use Filament\Infolists\Components\TextEntry\TextEntrySize;
+use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
+use Filament\Support\Enums\FontWeight;
 use Filament\Tables;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
@@ -19,6 +24,27 @@ class ArticleResource extends Resource
     protected static ?string $model = Article::class;
 
     protected static ?string $navigationIcon = 'heroicon-s-pencil';
+
+
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        return $infolist
+            ->schema([
+                TextEntry::make('title')
+                    ->columnSpanFull()
+                    ->hiddenLabel()
+                    ->alignCenter()
+                    ->size(TextEntrySize::Large)
+                    ->weight(FontWeight::ExtraBold),
+                TextEntry::make('content')
+                    ->columnSpanFull()
+                    ->hiddenLabel()
+                    ->alignJustify(),
+                ListCategories::make('categories')
+                    ->columnSpanFull()
+                    ->label('categories :')
+            ]);
+    }
 
     public static function form(Form $form): Form
     {

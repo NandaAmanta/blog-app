@@ -2,12 +2,15 @@
 
 namespace App\Filament\Resources;
 
+use App\Const\RoleConst;
 use App\Filament\Resources\RoleResource\Pages;
+use App\Models\Article;
 use Filament\Forms\Components\CheckboxList;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Actions\DeleteAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Spatie\Permission\Models\Permission;
@@ -37,8 +40,8 @@ class RoleResource extends Resource
             ->map(function ($permissions) {
                 $module = $permissions[0]['module'] ?? '-';
                 $options = [];
-                foreach($permissions as $action){
-                    $options[$action['action']] = $action['action'] .' '. $action['module']; 
+                foreach ($permissions as $action) {
+                    $options[$action['action']] = $action['action'] . ' ' . $action['module'];
                 }
                 return CheckboxList::make($module)
                     ->options($options);
@@ -63,6 +66,11 @@ class RoleResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                DeleteAction::make()->action(function (Role $record) {
+                    $record->permissions()->sync([]);
+                    $record->delete();
+                })
+                    ->hidden(fn (Role $record) => in_array($record->name, [RoleConst::ADMIN, RoleConst::WRITER]))
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

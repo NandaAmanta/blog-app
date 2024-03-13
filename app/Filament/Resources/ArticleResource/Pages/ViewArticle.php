@@ -7,6 +7,8 @@ use App\Filament\Resources\ArticleResource\Actions\MakePublicAction;
 use App\Models\Article;
 use Filament\Actions;
 use Filament\Actions\Action;
+use Filament\Infolists\Components\TextEntry;
+use Filament\Infolists\Infolist;
 use Filament\Resources\Pages\ViewRecord;
 
 class ViewArticle extends ViewRecord
