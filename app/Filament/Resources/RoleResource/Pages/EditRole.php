@@ -10,21 +10,37 @@ use Filament\Forms\Components\CheckboxList;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Pages\EditRecord;
+use Illuminate\Database\Eloquent\Model;
 use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class EditRole extends EditRecord
 {
     protected static string $resource = RoleResource::class;
 
-    protected function getSaveFormAction(): Action
+    protected function handleRecordUpdate(Model $record, array $data): Model
     {
-        $data = $this->getRecord()->attributesToArray();
-        return Action::make('save')
-            ->label(__('filament-panels::resources/pages/edit-record.form.actions.save.label'))
-            ->submit('save')
-            ->action(function (): void {
-            })
-            ->keyBindings(['mod+s']);
+        $record->update($data);
+        $keys = array_keys($data);
+        $permissionIds = [];
+        foreach ($keys as $key) {
+            if ($key == 'name') {
+                continue;
+            }
+            $module = $key;
+            $actions = collect($data[$module])
+                ->map(fn ($action) => $action . '.' . $module)
+                ->toArray();
+            $permissions = Permission::select('id')
+                ->whereIn('name', $actions)
+                ->get()
+                ->map(fn ($permission) => $permission->id)
+                ->toArray();
+            $permissionIds = array_merge($permissionIds, $permissions);
+            // Sync Relation Permissions
+        }
+        $record->permissions()->sync($permissionIds);
+        return $record;
     }
 
     public function form(Form $form): Form
