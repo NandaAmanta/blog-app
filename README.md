@@ -7,6 +7,45 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
+## Local Installation
+
+1. Install dependencies
+    ```
+    composer install
+    ```
+2. Copy `.env.example` to `.env`
+    ```
+    cp .env.example .env
+    ```
+3. Generate application key
+    ```
+    php artisan key:generate
+    ```
+4. Configure environment variables for database connection
+    ```
+    DB_CONNECTION=mongodb
+    DB_HOST=127.0.0.1
+    DB_PORT=27017
+    DB_DATABASE=homestead
+    DB_USERNAME=homestead
+    DB_PASSWORD=secret
+    GOOGLE_CLIENT_ID=
+    GOOGLE_CLIENT_SECRET=
+    ```
+5.  Migrate table and seed data
+    ```
+    php artisan migrate:fresh --seed
+    ```
+6. (Optional) Seed user role admin
+    ```
+    php artisan db:seed --class=AdminSeeder
+    ``` 
+7. Run the application
+    ```
+    php artisan serve
+    ```
+
+
 ## About Laravel
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
