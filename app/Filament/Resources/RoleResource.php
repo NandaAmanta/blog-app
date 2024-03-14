@@ -4,7 +4,6 @@ namespace App\Filament\Resources;
 
 use App\Const\RoleConst;
 use App\Filament\Resources\RoleResource\Pages;
-use App\Models\Article;
 use Filament\Forms\Components\CheckboxList;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
@@ -14,7 +13,7 @@ use Filament\Tables\Actions\DeleteAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Spatie\Permission\Models\Permission;
-use Spatie\Permission\Models\Role;
+use App\Models\Role;
 
 class RoleResource extends Resource
 {

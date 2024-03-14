@@ -6,7 +6,6 @@ use App\Const\Action;
 use App\Const\Module;
 use App\Models\Category;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
 
 class CategoryPolicy
 {

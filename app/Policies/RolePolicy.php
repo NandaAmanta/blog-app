@@ -5,8 +5,7 @@ namespace App\Policies;
 use App\Const\Action;
 use App\Const\Module;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
-use Spatie\Permission\Models\Role;
+use App\Models\Role;
 
 class RolePolicy
 {
