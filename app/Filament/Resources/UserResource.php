@@ -3,11 +3,15 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\UserResource\Pages;
+use App\Forms\Components\SelectRole;
 use App\Models\User;
 use Filament\Forms;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Table;
 use HasUploadArticlePerMonthFilter;
@@ -38,6 +42,11 @@ class UserResource extends Resource
                     ->password()
                     ->required()
                     ->maxLength(255),
+                Select::make('roles')
+                    ->multiple()
+                    ->relationship('roles', 'name')
+                    ->preload()
+                    ->required()
             ]);
     }
 
@@ -65,7 +74,11 @@ class UserResource extends Resource
                 IsActiveFilter::make(),
                 HasUploadArticlePerMonthFilter::make()
             ])
-            ->actions([]);
+            ->actions([
+                EditAction::make()
+                    ->hidden(fn (User $record) => $record->email == 'admin@gmail.com'),
+                ViewAction::make()
+            ]);
     }
 
     public static function getRelations(): array
@@ -79,7 +92,9 @@ class UserResource extends Resource
     {
         return [
             'index' => Pages\ListUsers::route('/'),
-            'create' => Pages\CreateUser::route('/create')
+            'create' => Pages\CreateUser::route('/create'),
+            'view' => Pages\ViewUser::route('/{record}'),
+            'edit' => Pages\EditUser::route('/{record}/edit'),
         ];
     }
 }
